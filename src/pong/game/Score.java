@@ -10,6 +10,7 @@ public class Score implements Observer{
 	private int score = 0;
 	private Paint paint;
 	private String player;
+	private boolean isRight;
 	
 	
 	public Score(boolean b,float x, float y) {
@@ -23,14 +24,8 @@ public class Score implements Observer{
 		this.y = y;
 		paint.setTextSize(20);
 		paint.setColor(Color.WHITE);
+		isRight = b; 
 	}
-	
-	
-	public void incrementScore() {
-		++this.score;
-	}
-	
-	
 	
 	public void draw(Canvas canvas) {
 		// True means right
@@ -45,7 +40,10 @@ public class Score implements Observer{
 
 	@Override
 	public void update(int home, int away) {
-		
+		if(this.isRight)
+			score = away;
+		else
+			score = home;
 	}
 
 }

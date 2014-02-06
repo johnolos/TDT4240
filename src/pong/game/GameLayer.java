@@ -1,12 +1,14 @@
 package pong.game;
 
+import java.util.ArrayList;
+
 import sheep.game.Layer;
 import sheep.math.BoundingBox;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class GameLayer extends Layer {
+public class GameLayer extends Layer implements Subject{
 
 	private Level level;
 	private Ball ball;
@@ -14,6 +16,8 @@ public class GameLayer extends Layer {
 	private Score rightScore, leftScore;
 	private boolean playerHasWon, rightPlayerHasWon;
 	private int goal = 5;
+	private ArrayList<Observer> obs;
+	private int home, away;
 
 	public GameLayer() {
 		playerHasWon = false;
@@ -24,6 +28,9 @@ public class GameLayer extends Layer {
 		leftScore = new Score(false, 100, 50);
 		ball = Ball.getInstance();
 		level = new Level();
+		obs = new ArrayList<Observer>();
+		this.home = 0;
+		this.away = 0;
 	}
 
 	@Override
@@ -33,7 +40,7 @@ public class GameLayer extends Layer {
 					&& ball.getY() < paddleRight.getRect().bottom)
 				ball.changeDirX();
 			else {
-				leftScore.incrementScore();
+				this.away++;
 				if(leftScore.getScore() == this.goal) {
 					this.playerHasWon = true;
 					this.rightPlayerHasWon = false;
@@ -46,7 +53,7 @@ public class GameLayer extends Layer {
 					&& ball.getY() < paddleLeft.getRect().bottom)
 				ball.changeDirX();
 			else {
-				rightScore.incrementScore();
+				this.home++;
 				if(rightScore.getScore() == this.goal) {
 					this.playerHasWon = true;
 					this.rightPlayerHasWon = true;
@@ -60,6 +67,9 @@ public class GameLayer extends Layer {
 		else if (ball.getY() > TitleScreen.HEIGHT-15)
 			ball.changeDirY();
 		ball.update(dt);
+		for (Observer observable : obs) {
+			observable.update(this.home, this.away);
+		}
 	}
 
 	@Override
@@ -112,5 +122,23 @@ public class GameLayer extends Layer {
 			string = "Player 1 wins!";
 		}
 		canvas.drawText(string, TitleScreen.WIDTH / 2 - 300, TitleScreen.HEIGHT / 2 + 50, paint);
+	}
+	
+	@Override
+	public void register(Observer o) {
+		obs.add(o);
+	}
+
+	@Override
+	public void Unregister(Observer o) {
+		int observerIndex = obs.indexOf(o);
+		obs.remove(observerIndex);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer o : obs) {
+			o.update(home, away);
+		}
 	}
 }
