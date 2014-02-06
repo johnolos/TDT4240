@@ -1,7 +1,6 @@
 package pong.game;
 
 import sheep.game.Layer;
-import sheep.graphics.Image;
 import sheep.math.BoundingBox;
 import android.graphics.Canvas;
 import android.graphics.Color;

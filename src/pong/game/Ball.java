@@ -11,20 +11,17 @@ public class Ball extends Sprite{
 	private boolean inMotion;
 	private static Ball instance;
 	
-	private Ball(Image image){
-		super(image);
+	private Ball(){
+		super(new Image(R.drawable.ball));
 		setPosition(TitleScreen.WIDTH/2, TitleScreen.HEIGHT/2);
 		inMotion = false;
 		instance = this;
 	}
 	
 	public static synchronized Ball getInstance() {
-		if(instance != null) {
-			return instance;
-		} else {
-		}
+		if(instance == null)
+			instance = new Ball();
 		return instance;
-		
 	}
 	
 	public void draw(Canvas can){
