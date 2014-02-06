@@ -29,6 +29,8 @@ public class GameLayer extends Layer implements Subject{
 		ball = Ball.getInstance();
 		level = new Level();
 		obs = new ArrayList<Observer>();
+		register(rightScore);
+		register(leftScore);
 		this.home = 0;
 		this.away = 0;
 	}
@@ -40,7 +42,7 @@ public class GameLayer extends Layer implements Subject{
 					&& ball.getY() < paddleRight.getRect().bottom)
 				ball.changeDirX();
 			else {
-				this.away++;
+				this.home++;
 				if(leftScore.getScore() == this.goal) {
 					this.playerHasWon = true;
 					this.rightPlayerHasWon = false;
@@ -53,7 +55,7 @@ public class GameLayer extends Layer implements Subject{
 					&& ball.getY() < paddleLeft.getRect().bottom)
 				ball.changeDirX();
 			else {
-				this.home++;
+				this.away++;
 				if(rightScore.getScore() == this.goal) {
 					this.playerHasWon = true;
 					this.rightPlayerHasWon = true;
