@@ -1,7 +1,6 @@
 package pong.game;
 
 import java.util.ArrayList;
-import java.util.Observer;
 
 import sheep.game.Sprite;
 import sheep.graphics.Image;
@@ -57,21 +56,18 @@ public class Ball extends Sprite implements Subject{
 	}
 	
 	@Override
-	public
-	void register(Observer o) {
+	public void register(Observer o) {
 		observers.add(o);
 	}
 
 	@Override
-	public
-	void Unregister(Observer o) {
+	public void Unregister(Observer o) {
 		int observerIndex = observers.indexOf(o);
 		observers.remove(observerIndex);
 	}
 
 	@Override
-	public
-	void notifyObserver(int home, int away) {
+	public void notifyObserver() {
 		for (Observer o : observers) {
 			o.update(home, away);
 		}
