@@ -1,21 +1,26 @@
 package pong.game;
 
+import java.util.ArrayList;
+import java.util.Observer;
+
 import sheep.game.Sprite;
 import sheep.graphics.Image;
 import android.graphics.Canvas;
 
-public class Ball extends Sprite{
+public class Ball extends Sprite implements Subject{
 	
 	private float velocityX = -600.0f;
 	private float velocityY = 150.0f;
 	private boolean inMotion;
 	private static Ball instance;
+	private ArrayList<Observer> observers;
 	
 	private Ball(){
 		super(new Image(R.drawable.ball));
 		setPosition(TitleScreen.WIDTH/2, TitleScreen.HEIGHT/2);
 		inMotion = false;
 		instance = this;
+		observers = new ArrayList();
 	}
 	
 	public static synchronized Ball getInstance() {
@@ -49,5 +54,23 @@ public class Ball extends Sprite{
 	
 	public void setMotion(boolean b){
 		inMotion = b;
+	}
+
+	@Override
+	public void register(Observer o) {
+		observers.add(o);
+	}
+
+	@Override
+	public void Unregister(Observer o) {
+		int observerIndex = observers.indexOf(o);
+		observers.remove(observerIndex);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for (Observer o : observers) {
+			o.update(home, away);
+		}
 	}
 }
