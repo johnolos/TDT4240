@@ -1,9 +1,11 @@
 package pong.game;
 
+import java.util.Observer;
+
 public interface Subject {
 	
-	public void register(Observer o);
-	public void Unregister(Observer o);
-	public void notifyObserver();
+	void register(Observer o);
+	void Unregister(Observer o);
+	void notifyObserver(int home, int away);
 
 }
