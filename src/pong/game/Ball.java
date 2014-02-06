@@ -22,7 +22,6 @@ public class Ball extends Sprite{
 		if(instance != null) {
 			return instance;
 		} else {
-			// Something
 		}
 		return instance;
 		

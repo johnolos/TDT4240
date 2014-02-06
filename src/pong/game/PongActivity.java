@@ -10,7 +10,6 @@ public class PongActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pong);
         Game game = new Game(this,null);
         game.pushState(new TitleScreen());
         setContentView(game);
