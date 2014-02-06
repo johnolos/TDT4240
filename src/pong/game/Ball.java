@@ -55,7 +55,7 @@ public class Ball extends Sprite implements Subject{
 	public void setMotion(boolean b){
 		inMotion = b;
 	}
-
+	
 	@Override
 	public void register(Observer o) {
 		observers.add(o);

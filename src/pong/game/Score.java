@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class Score {
+public class Score implements Observer{
 	private float x;
 	private float y;
 	private int score = 0;
@@ -40,6 +40,12 @@ public class Score {
 
 	public int getScore() {
 		return this.score;
+	}
+
+
+	@Override
+	public void update(int home, int away) {
+		
 	}
 
 }
